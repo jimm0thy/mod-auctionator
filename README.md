@@ -7,7 +7,7 @@ This mod is meant to keep a healthy auction house stocked on a low-pop server. I
 1. Download the code into your source code `modules/` folder
 2. Do the Compilation Things as best you can.
 3. Run the database script in `mod-auctionator/data/sql/db-world/base/2023-09-18.sql` against your `acore_world` database.
-4. Run the database script in `modules/mod-auctionator/data/sql/db-characters/updates/2023_11_12_00_marketprice.sql` against your `acore_characters` database.
+4. **NOTE** you may not need to do this, looks like server runs this automatically? Run the database script in `modules/mod-auctionator/data/sql/db-characters/updates/2023_11_12_00_marketprice.sql` against your `acore_characters` database.
 5. If you want a fresh start clear you auction house with these SQL commands. Do this ONLY when your server is stopped. The AH is cached in memory and if you do this while your server is running then likely ... things won't go well. Run this against your character database (default of `acore_characters`).
 
 ```
