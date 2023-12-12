@@ -139,6 +139,17 @@ void AuctionatorSeller::LetsGetToIt(uint32 maxCount, uint32 houseId)
         std::string itemName = fields[1].Get<std::string>();
 
         uint32 stackSize = fields[3].Get<uint32>();
+        if (stackSize > 20) {
+            stackSize = 20;
+        }
+
+        // if (stackSize > 20) {
+        //     std::random_device rd;
+        //     std::mt19937 gen(rd());
+        //     std::uniform_int_distribution<> dis(1, stackSize);
+        //     stackSize = dis(gen);
+        //     logDebug("Stack size: " + std::to_string(stackSize));
+        // }
 
         uint32 quality = fields[4].Get<uint32>();
         float qualityMultiplier = Auctionator::GetQualityMultiplier(multiplierConfig, quality);
