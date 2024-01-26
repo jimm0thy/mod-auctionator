@@ -36,6 +36,8 @@ struct AuctionatorSellerConfig
         uint32 queryLimit = 1000;
         uint32 defaultPrice = 10000000;
         uint32 auctionsPerRun = 100;
+        uint32 randomizeStackSize = 1;
+        float bidStartModifier = .3;
 };
 
 class AuctionatorConfig

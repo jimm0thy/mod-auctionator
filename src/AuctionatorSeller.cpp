@@ -143,13 +143,11 @@ void AuctionatorSeller::LetsGetToIt(uint32 maxCount, uint32 houseId)
             stackSize = 20;
         }
 
-        // if (stackSize > 20) {
-        //     std::random_device rd;
-        //     std::mt19937 gen(rd());
-        //     std::uniform_int_distribution<> dis(1, stackSize);
-        //     stackSize = dis(gen);
-        //     logDebug("Stack size: " + std::to_string(stackSize));
-        // }
+        // create a random number between 1 and stackSize
+        if (stackSize > 1 && nator->config->sellerConfig.randomizeStackSize) {
+            stackSize = GetRandomNumber(1, stackSize);
+            logDebug("Stack size: " + std::to_string(stackSize));
+        }
 
         uint32 quality = fields[4].Get<uint32>();
         float qualityMultiplier = Auctionator::GetQualityMultiplier(multiplierConfig, quality);
@@ -166,10 +164,18 @@ void AuctionatorSeller::LetsGetToIt(uint32 maxCount, uint32 houseId)
             price = 10000000 * qualityMultiplier;
         }
 
+        // calculate our starting bid price
+        uint32 bidPrice = price;
+        float bidStartModifier = nator->config->sellerConfig.bidStartModifier;
+        logDebug("Bid start modifier: " + std::to_string(bidStartModifier));
+        bidPrice = GetRandomNumber(bidPrice - (bidPrice * bidStartModifier), bidPrice);
+        logDebug("Bid price " + std::to_string(bidPrice) + " from price " + std::to_string(price));
+
         AuctionatorItem newItem = AuctionatorItem();
         newItem.itemId = fields[0].Get<uint32>();
         newItem.quantity = 1;
         newItem.buyout = uint32(price * stackSize * qualityMultiplier);
+        newItem.bid = uint32(bidPrice * stackSize * qualityMultiplier);
         newItem.time = 60 * 60 * 12;
         newItem.stackSize = stackSize;
 
@@ -191,3 +197,11 @@ void AuctionatorSeller::LetsGetToIt(uint32 maxCount, uint32 houseId)
         + ") this run: " + std::to_string(count));
 
 };
+
+uint32 AuctionatorSeller::GetRandomNumber(uint32 min, uint32 max)
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(min, max);
+    return dis(gen);
+}
