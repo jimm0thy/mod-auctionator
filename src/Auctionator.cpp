@@ -219,6 +219,8 @@ void Auctionator::InitializeConfig(ConfigMgr* configMgr)
     config->sellerConfig.defaultPrice = configMgr->GetOption<uint32>("Auctionator.Seller.DefaultPrice", 10000000);
     config->sellerConfig.queryLimit = 
         configMgr->GetOption<uint32>("Auctionator.Seller.QueryLimit", config->sellerConfig.auctionsPerRun);
+    config->sellerConfig.randomizeStackSize = configMgr->GetOption<uint32>("Auctionator.Seller.RandomizeStackSize", 1);
+    config->sellerConfig.bidStartModifier = configMgr->GetOption<float>("Auctionator.Seller.BidStartModifier", 1.0f);
 
     // Load our bidder configurations
     config->allianceBidder.enabled = configMgr->GetOption<uint32>("Auctionator.AllianceBidder.Enabled", 0);

@@ -16,6 +16,7 @@ class AuctionatorSeller : public AuctionatorBase
         AuctionatorSeller(Auctionator* natorParam, uint32 auctionHouseIdParam);
         ~AuctionatorSeller();
         void LetsGetToIt(uint32 maxCount, uint32 houseId);
+        uint32 GetRandomNumber(uint32 min, uint32 max);
 };
 
 #endif  //AUCTIONATORSELLER_H

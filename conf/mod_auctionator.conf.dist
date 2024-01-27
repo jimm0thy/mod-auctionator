@@ -76,6 +76,25 @@ Auctionator.Seller.DefaultPrice = 10000000
 Auctionator.Seller.AuctionsPerRun = 100
 
 ########################################
+# Do we want to randomize the size of stacks?
+#
+# 1 - Yes, make stack size somewhere between 1 and the max stack size.
+# 0 - No, make stack size always the max stack size for an item
+########################################
+Auctionator.Seller.RandomizeStackSize = 1
+
+########################################
+# How low do we want to (randomly) start bids at?
+# The default value of .3 means that we will start
+# the bid price of an item between the base price
+# and 30% less than the base price.
+#
+# e.g. if the price of an item is 100 then the
+# start bid price will be somewhere between 70 and 100
+########################################
+Auctionator.Seller.BidStartModifier = .3
+
+########################################
 # Allows the bidder to bid on their own auctions.
 # This is useful for testing changes and would also
 # get you more turnover in you auctions.
@@ -88,20 +107,20 @@ Auctionator.Bidder.BidOnOwn = 0
 ########################################
 Auctionator.Multipliers.Seller.Poor = 1.0
 Auctionator.Multipliers.Seller.Normal = 1.0
-Auctionator.Multipliers.Seller.Uncommon = 1.5
-Auctionator.Multipliers.Seller.Rare = 2.0
-Auctionator.Multipliers.Seller.Epic = 6.0
-Auctionator.Multipliers.Seller.Legendary = 10.0
+Auctionator.Multipliers.Seller.Uncommon = 2.0
+Auctionator.Multipliers.Seller.Rare = 6.0
+Auctionator.Multipliers.Seller.Epic = 10.0
+Auctionator.Multipliers.Seller.Legendary = 15.0
 
 ########################################
 # Multipliers for bidder prices
 ########################################
 Auctionator.Multipliers.Bidder.Poor = 1.0
 Auctionator.Multipliers.Bidder.Normal = 1.0
-Auctionator.Multipliers.Bidder.Uncommon = 1.5
-Auctionator.Multipliers.Bidder.Rare = 2.0
-Auctionator.Multipliers.Bidder.Epic = 6.0
-Auctionator.Multipliers.Bidder.Legendary = 10.0
+Auctionator.Multipliers.Bidder.Uncommon = 2.0
+Auctionator.Multipliers.Bidder.Rare = 6.0
+Auctionator.Multipliers.Bidder.Epic = 10.0
+Auctionator.Multipliers.Bidder.Legendary = 15.0
 
 ###################################################################################################
 # LOGGING SYSTEM SETTINGS
