@@ -92,7 +92,7 @@ Auctionator.Seller.RandomizeStackSize = 1
 # e.g. if the price of an item is 100 then the
 # start bid price will be somewhere between 70 and 100
 ########################################
-Auctionator.Seller.BidStartModify = .3
+Auctionator.Seller.BidStartModifier = .3
 
 ########################################
 # Allows the bidder to bid on their own auctions.
@@ -107,20 +107,20 @@ Auctionator.Bidder.BidOnOwn = 0
 ########################################
 Auctionator.Multipliers.Seller.Poor = 1.0
 Auctionator.Multipliers.Seller.Normal = 1.0
-Auctionator.Multipliers.Seller.Uncommon = 1.5
-Auctionator.Multipliers.Seller.Rare = 2.0
-Auctionator.Multipliers.Seller.Epic = 6.0
-Auctionator.Multipliers.Seller.Legendary = 10.0
+Auctionator.Multipliers.Seller.Uncommon = 2.0
+Auctionator.Multipliers.Seller.Rare = 6.0
+Auctionator.Multipliers.Seller.Epic = 10.0
+Auctionator.Multipliers.Seller.Legendary = 15.0
 
 ########################################
 # Multipliers for bidder prices
 ########################################
 Auctionator.Multipliers.Bidder.Poor = 1.0
 Auctionator.Multipliers.Bidder.Normal = 1.0
-Auctionator.Multipliers.Bidder.Uncommon = 1.5
-Auctionator.Multipliers.Bidder.Rare = 2.0
-Auctionator.Multipliers.Bidder.Epic = 6.0
-Auctionator.Multipliers.Bidder.Legendary = 10.0
+Auctionator.Multipliers.Bidder.Uncommon = 2.0
+Auctionator.Multipliers.Bidder.Rare = 6.0
+Auctionator.Multipliers.Bidder.Epic = 10.0
+Auctionator.Multipliers.Bidder.Legendary = 15.0
 
 ###################################################################################################
 # LOGGING SYSTEM SETTINGS
