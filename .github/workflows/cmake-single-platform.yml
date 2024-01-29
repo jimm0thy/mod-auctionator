@@ -23,18 +23,10 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Checkout ACore
-      uses: rohmanngmbh/action-checkout-repo@v1.3.5
-      with:
-        # Repository name with owner. For example, actions/checkout
-        repository: araxiaonline/AzerothCore-wotlk-with-NPCBots
-        path: AzerothCore
-    - name: Checkout mod-auctionator
-      uses: rohmanngmbh/action-checkout-repo@v1.3.5
-      with:
-        path: AzerothCore/modules/mod-auctionator
+      run: git checkout https://github.com/araxiaonline/AzerothCore-wotlk-with-NPCBots.git
 
     - name: List Files
-      working-directory: ${{github.workspace}}/AzerothCore
+      working-directory: ${{github.workspace}}/
       # Execute tests defined by the CMake configuration.
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ls -al
