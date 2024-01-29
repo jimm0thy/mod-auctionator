@@ -28,9 +28,10 @@ jobs:
         git clone https://github.com/araxiaonline/AzerothCore-wotlk-with-NPCBots.git
         cd AzerothCore-wotlk-with-NPCBots/modules
         git clone https://github.com/araxiaonline/mod-auctionator.git
-        cd ../../
+        cd /home/runner/work/AzerothCore-wotlk-with-NPCBots/
         mkdir build
         cd build
+        ls -al
         cmake ../
         make -j 4
 
