@@ -44,7 +44,7 @@ jobs:
 
     - name: Compile
       run: |
-        cd AzerothCore-wotlk-with-NPCBots/
+        cd AzerothCore-wotlk-with-NPCBots/build
         make -j 16
 
     - name: List Files
