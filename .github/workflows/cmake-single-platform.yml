@@ -27,16 +27,24 @@ jobs:
 
     - name: Checkout ACore
       run: |
-        pwd
         git clone https://github.com/araxiaonline/AzerothCore-wotlk-with-NPCBots.git
+
+    - name: Checkout mod-auctionator
+      run: |
         cd AzerothCore-wotlk-with-NPCBots/modules
         git clone https://github.com/araxiaonline/mod-auctionator.git
-        cd ../
+
+    - name: Run Cmake
+      run: |
+        cd AzerothCore-wotlk-with-NPCBots/
         mkdir build
         cd build
-        ls -al
         cmake ../
-        make -j 4
+
+    - name: Compile
+      run: |
+        cd AzerothCore-wotlk-with-NPCBots/
+        make -j 16
 
     - name: List Files
       working-directory: /home/runner/work/AzerothCore-wotlk-with-NPCBots/
