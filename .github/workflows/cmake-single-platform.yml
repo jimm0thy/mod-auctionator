@@ -27,7 +27,6 @@ jobs:
 
     - name: Checkout ACore
       run: |
-        cd ${{github.path}}
         pwd
         git clone https://github.com/araxiaonline/AzerothCore-wotlk-with-NPCBots.git
         cd AzerothCore-wotlk-with-NPCBots/modules
