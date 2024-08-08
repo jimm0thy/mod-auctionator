@@ -16,11 +16,129 @@ class AuctionatorCommands : public CommandScript
         }
 
     private:
+        static bool HandleCommandOptionsNew(ChatHandler* handler, const std::vector<std::string>& args)
+        {
+            std::string command;
+            if (!args.empty())
+            {
+                command = args[0];
+            }
+            else
+            {
+                command = "help";
+            }
+
+            std::vector<std::string> commandParams;
+            for (size_t i = 1; i < args.size(); ++i)
+            {
+                commandParams.push_back(args[i]);
+            }
+
+            if (command.empty())
+            {
+                return true;
+            }
+
+            gAuctionator->logDebug("Executing command: " + command);
+
+            if (command == "add")
+            {
+                gAuctionator->logInfo("Adding new Item for GM");
+                if (commandParams.size() >= 3)
+                {
+                    uint32 auctionHouseId = std::stoi(commandParams[0]);
+                    uint32 itemId = std::stoi(commandParams[1]);
+                    uint32 price = std::stoi(commandParams[2]);
+                    AddItemForBuyout(auctionHouseId, itemId, price, gAuctionator);
+                }
+                else
+                {
+                    // Handle invalid command arguments
+                }
+            }
+            else if (command == "auctionspercycle")
+
+            {
+                std::vector<const char*> commandParamsArray;
+                for (const std::string& param : commandParams)
+                {
+                    commandParamsArray.push_back(param.c_str());
+                }
+                CommandAuctionsPerCycle(commandParamsArray.data(), handler, gAuctionator);
+            }
+            else if (command == "bidonown")
+
+            {
+                std::vector<const char*> commandParamsArray;
+                for (const std::string& param : commandParams)
+                {
+                    commandParamsArray.push_back(param.c_str());
+                }
+                CommandBidOnOwn(commandParamsArray.data(), handler, gAuctionator);
+            }
+            else if (command == "bidspercycle")
+            {
+                std::vector<const char*> commandParamsArray;
+                for (const std::string& param : commandParams)
+                {
+                    commandParamsArray.push_back(param.c_str());
+                }
+                CommandBidsPerCycle(commandParamsArray.data(), handler, gAuctionator);
+            }
+            else if (command == "disable")
+            {
+                std::vector<const char*> commandParamsArray;
+                for (const std::string& param : commandParams)
+                {
+                    commandParamsArray.push_back(param.c_str());
+                }
+                CommandDisableSeller(commandParamsArray.data(), handler, gAuctionator);
+            }
+            else if (command == "enable")
+            {
+                std::vector<const char*> commandParamsArray;
+                for (const std::string& param : commandParams)
+                {
+                    commandParamsArray.push_back(param.c_str());
+                }
+                CommandEnableSeller(commandParamsArray.data(), handler, gAuctionator);
+            }
+            else if (command == "expireall")
+            {
+                std::vector<const char*> commandParamsArray;
+                for (const std::string& param : commandParams)
+                {
+                    commandParamsArray.push_back(param.c_str());
+                }
+                CommandExpireAll(commandParamsArray.data(), handler, gAuctionator);
+            }
+            else if (command == "multiplier")
+            {
+                std::vector<const char*> commandParamsArray;
+                for (const std::string& param : commandParams)
+                {
+                    commandParamsArray.push_back(param.c_str());
+                }
+                CommandSetMultiplier(commandParamsArray.data(), handler, gAuctionator);
+            }
+            else if (command == "status")
+            {
+                ShowStatus(handler, gAuctionator);
+            }
+            else if (command == "help")
+            {
+                ShowHelp(handler);
+                return true;
+            }
+
+            return true;
+        }
+
         ChatCommandTable GetCommands() const override
         {
             static ChatCommandTable commandTableBase =
             {
-                { "auctionator", HandleCommandOptions, SEC_GAMEMASTER, Console::Yes }
+                { "auctionator", HandleCommandOptionsNew, SEC_GAMEMASTER, Console::Yes }
             };
 
             return commandTableBase;
