@@ -16,18 +16,14 @@ class AuctionatorCommands : public CommandScript
         }
 
     private:
-        std::vector<ChatCommand> GetCommands() const override
+        ChatCommandTable GetCommands() const override
         {
-            return std::vector<ChatCommand>
+            static ChatCommandTable commandTableBase =
             {
-               {
-                  "auctionator",
-                  SEC_GAMEMASTER,
-                  true,
-                  &HandleCommandOptions,
-                  ""
-               }
+                { "auctionator", HandleCommandOptions, SEC_GAMEMASTER, Console::Yes }
             };
+
+            return commandTableBase;
         }
 
         static bool HandleCommandOptions(ChatHandler* handler, const char* args)
