@@ -1,15 +1,14 @@
 # ![logo](https://raw.githubusercontent.com/azerothcore/azerothcore.github.io/master/images/logo-github.png) Azeroth Core Module
 
 ## mod-auctionator
-![Latest Release](https://img.shields.io/github/v/release/araxiaonline/mod-learn-spells?label=current%20version)
-![GitHub Release Date](https://img.shields.io/github/release-date/araxiaonline/mod-learn-spells)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/araxiaonline/mod-learn-spells/build-release.yml?branch=araxia-main&event=push&label=build%20status)
+![Latest Release](https://img.shields.io/github/v/release/araxiaonline/mod-auctionator?label=current%20version)
+![GitHub Release Date](https://img.shields.io/github/release-date/araxiaonline/mod-auctionator)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/araxiaonline/mod-auctionator/build-release.yml?branch=araxia-main&event=push&label=build%20status)
 
 <p align="left">
   <img src="https://github.com/araxiaonline/docs/blob/main/docs/media/logo-sm.png?raw=true" alt="Araxia Online" width="70" style="vertical-align: middle;"/>
-  <span style="font-size: 20px; vertical-align: middle;">Developed By Araxia Online</span>
+  <span style="font-size: 20px; vertical-align: middle;" >Developed By Araxia Online</span>
 </p>
-
 
 ## Description
 
