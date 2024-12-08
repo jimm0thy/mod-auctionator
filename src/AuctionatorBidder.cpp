@@ -2,6 +2,7 @@
 #include "Auctionator.h"
 #include "ObjectMgr.h"
 #include <random>
+#include "QueryResult.h"
 
 
 AuctionatorBidder::AuctionatorBidder(uint32 auctionHouseIdParam, ObjectGuid buyer, AuctionatorConfig* auctionatorConfig)
