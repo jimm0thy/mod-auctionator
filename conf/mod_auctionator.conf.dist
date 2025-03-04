@@ -35,6 +35,8 @@ Auctionator.HordeSeller.MaxAuctions = 5000
 Auctionator.NeutralSeller.Enabled = 0
 Auctionator.NeutralSeller.MaxAuctions = 5000
 
+Auctionator.Seller.CycleMinutes = 5
+
 ########################################
 # Bidder/Buyer configuration
 ########################################
