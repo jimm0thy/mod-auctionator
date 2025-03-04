@@ -72,11 +72,10 @@ void AuctionatorEvents::InitializeEvents()
 
 void AuctionatorEvents::ExecuteEvents()
 {
-    logInfo("Executing events");
+    logInfo("Executing events");    
     uint32 currentEvent = events.ExecuteEvent();
     while (currentEvent != 0) {
-        logInfo("Executing event: " + eventToFunction[currentEvent]);
-
+        logInfo("Executing event: " + eventToFunction[currentEvent]);        
         if (eventToFunction[currentEvent] != "") {
             try {
                 // this shit stopped working and I have no idea why
@@ -149,14 +148,14 @@ void AuctionatorEvents::SetHouses(AuctionatorHouses* auctionatorHouses)
 
 void AuctionatorEvents::EventAllianceBidder()
 {
-    logInfo("Starting Alliance Bidder");
+    logInfo("Starting Alliance Bidder");   
     AuctionatorBidder bidder = AuctionatorBidder((uint32)AuctionHouseId::Alliance, auctionatorGuid, config);
     bidder.SpendSomeCash();
 }
 
 void AuctionatorEvents::EventHordeBidder()
 {
-    logInfo("Starting Horde Bidder");
+    logInfo("Starting Horde Bidder");    
     AuctionatorBidder bidder = AuctionatorBidder((uint32)AuctionHouseId::Horde, auctionatorGuid, config);
     bidder.SpendSomeCash();
 }

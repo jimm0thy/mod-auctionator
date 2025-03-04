@@ -12,22 +12,22 @@ class AuctionatorBase
     public:
         void logDebug(std::string message) {
             std::string output = logPrefix + message;
-            LOG_DEBUG("auctionator", output);
+            LOG_DEBUG("module", output);
         }
 
         void logError(std::string message) {
             std::string output = logPrefix + message;
-            LOG_ERROR("auctionator", output);
+            LOG_ERROR("module", output);
         }
 
         void logInfo(std::string message) {
             std::string output = logPrefix + message;
-            LOG_INFO("auctionator", output);
+            LOG_INFO("module", output);
         }
 
         void logTrace(std::string message) {
             std::string output = logPrefix + message;
-            LOG_TRACE("auctionator", output);
+            LOG_TRACE("module", output);
         }
 
         void SetLogPrefix(std::string prefix)
