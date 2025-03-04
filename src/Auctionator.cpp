@@ -222,6 +222,7 @@ void Auctionator::InitializeConfig(ConfigMgr* configMgr)
         configMgr->GetOption<uint32>("Auctionator.Seller.QueryLimit", config->sellerConfig.auctionsPerRun);
     config->sellerConfig.randomizeStackSize = configMgr->GetOption<uint32>("Auctionator.Seller.RandomizeStackSize", 1);
     config->sellerConfig.bidStartModifier = configMgr->GetOption<float>("Auctionator.Seller.BidStartModifier", 1.0f);
+    config->sellerConfig.sellerCycleMinutes = configMgr->GetOption<uint32>("Auctionator.Seller.CycleMinutes", 5); // Let's make selling event run times configurable
 
     // Load our bidder configurations
     config->allianceBidder.enabled = configMgr->GetOption<uint32>("Auctionator.AllianceBidder.Enabled", 0);

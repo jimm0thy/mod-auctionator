@@ -38,6 +38,7 @@ struct AuctionatorSellerConfig
         uint32 auctionsPerRun = 100;
         uint32 randomizeStackSize = 1;
         float bidStartModifier = .3;
+        uint32 sellerCycleMinutes; // Let's make selling event run times configurable
 };
 
 class AuctionatorConfig

@@ -3,6 +3,8 @@
 #include "AuctionatorBidder.h"
 #include "AuctionatorSeller.h"
 #include "Log.h"
+#include "DatabaseEnv.h"
+#include "QueryResult.h"
 #include <functional>
 
 AuctionatorEvents::AuctionatorEvents(AuctionatorConfig* auctionatorConfig)
@@ -56,25 +58,24 @@ void AuctionatorEvents::InitializeEvents()
     }
 
     if (config->allianceSeller.enabled) {
-        events.ScheduleEvent(4, 1);
+        events.ScheduleEvent(4, config->sellerConfig.sellerCycleMinutes); // Let's make selling event run times configurable 
     }
 
     if (config->hordeSeller.enabled) {
-        events.ScheduleEvent(5, 1);
+        events.ScheduleEvent(5, config->sellerConfig.sellerCycleMinutes); // Let's make selling event run times configurable
     }
 
     if (config->neutralSeller.enabled) {
-        events.ScheduleEvent(6, 1);
+        events.ScheduleEvent(6, config->sellerConfig.sellerCycleMinutes); // Let's make selling event run times configurable
     }
 }
 
 void AuctionatorEvents::ExecuteEvents()
 {
-    logInfo("Executing events");
+    logInfo("Executing events");    
     uint32 currentEvent = events.ExecuteEvent();
     while (currentEvent != 0) {
-        logInfo("Executing event: " + eventToFunction[currentEvent]);
-
+        logInfo("Executing event: " + eventToFunction[currentEvent]);        
         if (eventToFunction[currentEvent] != "") {
             try {
                 // this shit stopped working and I have no idea why
@@ -103,19 +104,19 @@ void AuctionatorEvents::ExecuteEvents()
                     case 4:
                         EventAllianceSeller();
                         if (config->allianceSeller.enabled) {
-                            events.ScheduleEvent(currentEvent, 1);
+                            events.ScheduleEvent(currentEvent, config->sellerConfig.sellerCycleMinutes); // Let's make selling event run times configurable
                         }
                         break;
                     case 5:
                         EventHordeSeller();
                         if (config->hordeSeller.enabled) {
-                            events.ScheduleEvent(currentEvent, 1);
+                            events.ScheduleEvent(currentEvent, config->sellerConfig.sellerCycleMinutes); // Let's make selling event run times configurable
                         }
                         break;
                     case 6:
                         EventNeutralSeller();
                         if (config->neutralSeller.enabled) {
-                            events.ScheduleEvent(currentEvent, 1);
+                            events.ScheduleEvent(currentEvent, config->sellerConfig.sellerCycleMinutes); // Let's make selling event run times configurable
                         }
                         break;
                 }
@@ -147,14 +148,14 @@ void AuctionatorEvents::SetHouses(AuctionatorHouses* auctionatorHouses)
 
 void AuctionatorEvents::EventAllianceBidder()
 {
-    logInfo("Starting Alliance Bidder");
+    logInfo("Starting Alliance Bidder");   
     AuctionatorBidder bidder = AuctionatorBidder((uint32)AuctionHouseId::Alliance, auctionatorGuid, config);
     bidder.SpendSomeCash();
 }
 
 void AuctionatorEvents::EventHordeBidder()
 {
-    logInfo("Starting Horde Bidder");
+    logInfo("Starting Horde Bidder");    
     AuctionatorBidder bidder = AuctionatorBidder((uint32)AuctionHouseId::Horde, auctionatorGuid, config);
     bidder.SpendSomeCash();
 }
@@ -173,10 +174,14 @@ void AuctionatorEvents::EventAllianceSeller()
 
     uint32 auctionCountAlliance = houses->AllianceAh->Getcount();
 
-    if (auctionCountAlliance <= config->allianceSeller.maxAuctions) {
+    QueryResult result = CharacterDatabase.Query("SELECT id FROM auctionhouse where itemowner = {} and houseid = {}", config->characterGuid, 2); // only count our own auctions
+    //uint32 myAuctions = (auctionCountAlliance - result->GetRowCount());
+    logInfo("My Alliance Auctions = " + std::to_string(result->GetRowCount()));
+
+    if (result->GetRowCount() <= config->allianceSeller.maxAuctions) {
         logInfo(
             "Alliance count is good, here we go: "
-            + std::to_string(auctionCountAlliance)
+            + std::to_string(result->GetRowCount())
             + " of " + std::to_string(config->allianceSeller.maxAuctions)
         );
 
@@ -185,7 +190,7 @@ void AuctionatorEvents::EventAllianceSeller()
             (uint32)AuctionHouseId::Alliance
         );
     } else {
-        logInfo("Alliance count over max: " + std::to_string(auctionCountAlliance));
+        logInfo("Alliance count over max: " + std::to_string(result->GetRowCount()));
     }
     
 }
@@ -197,10 +202,14 @@ void AuctionatorEvents::EventHordeSeller()
 
     uint32 auctionCountHorde = houses->HordeAh->Getcount();
 
-    if (auctionCountHorde <= config->hordeSeller.maxAuctions) {
+    QueryResult result = CharacterDatabase.Query("SELECT id FROM auctionhouse where itemowner = {} and houseid = {}", config->characterGuid, 6); // only count our own auctions
+    //uint32 myAuctions = (auctionCountHorde - result->GetRowCount());
+    logInfo("My Horde Auctions = " + std::to_string(result->GetRowCount()));
+
+    if (result->GetRowCount() <= config->hordeSeller.maxAuctions) {
         logInfo(
             "Horde count is good, here we go: "
-            + std::to_string(auctionCountHorde)
+            + std::to_string(result->GetRowCount())
             + " of " + std::to_string(config->hordeSeller.maxAuctions)
         );
 
@@ -209,7 +218,7 @@ void AuctionatorEvents::EventHordeSeller()
             (uint32)AuctionHouseId::Horde
         );
     } else {
-        logInfo("Horde count over max: " + std::to_string(auctionCountHorde));
+        logInfo("Horde count over max: " + std::to_string(result->GetRowCount()));
     }
 }
 
@@ -220,10 +229,14 @@ void AuctionatorEvents::EventNeutralSeller()
 
     uint32 auctionCountNeutral = houses->NeutralAh->Getcount();
 
-    if (auctionCountNeutral <= config->neutralSeller.maxAuctions) {
+    QueryResult result = CharacterDatabase.Query("SELECT id FROM auctionhouse where itemowner = {} and houseid = {}", config->characterGuid, 7); // only count our own auctions
+    //uint32 myAuctions = (auctionCountNeutral - result->GetRowCount());
+    logInfo("My Neutral Auctions = " + std::to_string(result->GetRowCount()));
+
+    if (result->GetRowCount() <= config->neutralSeller.maxAuctions) {
         logInfo(
             "Neutral count is good, here we go: "
-            + std::to_string(auctionCountNeutral)
+            + std::to_string(result->GetRowCount())
             + " of " + std::to_string(config->neutralSeller.maxAuctions)
         );
 
@@ -233,7 +246,7 @@ void AuctionatorEvents::EventNeutralSeller()
         );
 
     } else {
-        logInfo("Neutral count over max: " + std::to_string(auctionCountNeutral));
+        logInfo("Neutral count over max: " + std::to_string(result->GetRowCount()));
     }
 }
 
