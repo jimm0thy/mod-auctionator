@@ -66,6 +66,7 @@ class AuctionatorConfig
         AuctionatorSellerConfig sellerConfig;
 
         uint32 bidOnOwn = 0;
+        std::string NoBuyList;
 };
 
 #endif

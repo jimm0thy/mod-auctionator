@@ -101,8 +101,11 @@ Auctionator.Seller.BidStartModifier = .3
 # This is useful for testing changes and would also
 # get you more turnover in you auctions.
 # Default is 0 to disable bidding on own auctions.
+#
+# NoBuyList allows you to list additional character guid's to not buy from
 ########################################
 Auctionator.Bidder.BidOnOwn = 0
+Auctionator.Bidder.NoBuyList = 
 
 ########################################
 # Multipliers for seller

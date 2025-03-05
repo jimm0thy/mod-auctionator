@@ -163,7 +163,7 @@ void AuctionatorSeller::LetsGetToIt(uint32 maxCount, uint32 houseId)
         }
 
         if (price == 0) {
-            price = 10000000 * qualityMultiplier;
+            price = 10000000; //*qualityMultiplier; -- qualityMultiplier is applied below so lets not double it
         }
 
         // calculate our starting bid price

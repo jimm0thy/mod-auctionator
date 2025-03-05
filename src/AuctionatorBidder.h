@@ -15,6 +15,7 @@ class AuctionatorBidder : AuctionatorBase
         AuctionatorConfig* config;
         uint32 bidOnOwn = 0;
         uint32 GetAuctionsPerCycle();
+        std::string NoBuyList;
 
     public:
         AuctionatorBidder(uint32 auctionHouseIdParam, ObjectGuid buyer, AuctionatorConfig* auctionatorConfig);

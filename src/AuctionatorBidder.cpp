@@ -13,6 +13,7 @@ AuctionatorBidder::AuctionatorBidder(uint32 auctionHouseIdParam, ObjectGuid buye
     ahMgr = sAuctionMgr->GetAuctionsMapByHouseId((AuctionHouseId)auctionHouseId);
     config = auctionatorConfig;
     bidOnOwn = config->bidOnOwn;
+    NoBuyList = config->NoBuyList;
 }
 
 AuctionatorBidder::~AuctionatorBidder()
@@ -24,12 +25,12 @@ void AuctionatorBidder::SpendSomeCash()
 {
     uint32 auctionatorPlayerGuid = buyerGuid.GetRawValue();
 
-    std::string query = R"(
+   /* std::string query = R"(
         SELECT
             ah.id
         FROM auctionhouse ah
         WHERE itemowner <> {} AND houseid = {};
-    )";
+    )";*/
 
     // for testing we may want to bid on our own auctions.
     // if we do we set the ownerToSkip to 0 so we will pick
@@ -39,15 +40,29 @@ void AuctionatorBidder::SpendSomeCash()
         ownerToSkip = 0;
     }
 
-    QueryResult result = CharacterDatabase.Query(query, ownerToSkip, auctionHouseId);
+    std::string listNotToBuyFrom;
+
+    if (!NoBuyList.size() == 0)
+    {
+        listNotToBuyFrom = (std::to_string(ownerToSkip) + "," + NoBuyList);
+        LOG_INFO("module", "[Auctionator] NoBuyList Activated: {}", listNotToBuyFrom);
+        
+    }
+    else
+    {
+        listNotToBuyFrom = std::to_string(ownerToSkip);
+        LOG_INFO("module", "[Auctionator] NoBuyList Not Active: {}", ownerToSkip);        
+    }
+    
+    QueryResult result = CharacterDatabase.Query("SELECT id FROM auctionhouse WHERE itemowner not in ({}) AND houseid = {}", listNotToBuyFrom, auctionHouseId);
 
     if (!result) {
         logInfo("Can't see player auctions at ["
-            + std::to_string(auctionHouseId) + "] not from ["
-            + std::to_string(auctionatorPlayerGuid) + "], moving on.");
+            + std::to_string(auctionHouseId) + "] only ones from ["
+            + listNotToBuyFrom + "], moving on.");
         return;
     }
-
+    
     if (result->GetRowCount() == 0) {
         logInfo("No player auctions, taking my money elsewhere.");
         return;

@@ -238,6 +238,7 @@ void Auctionator::InitializeConfig(ConfigMgr* configMgr)
     config->neutralBidder.maxPerCycle = configMgr->GetOption<uint32>("Auctionator.NeutralBidder.MaxPerCycle", 1);
 
     config->bidOnOwn = configMgr->GetOption<uint32>("Auctionator.Bidder.BidOnOwn", 0);
+    config->NoBuyList = configMgr->GetOption<std::string>("Auctionator.Bidder.NoBuyList", "");
 
     // load out multipliers for seller prices
     config->sellerMultipliers.poor
