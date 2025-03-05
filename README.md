@@ -14,6 +14,8 @@
 
 This mod is meant to keep a healthy auction house stocked on a low-pop server. It's in it's early phases of building/testing/configuration but keeps a LOT of stuff in the AH. Code is also a little rough right now but I haven't done c++ in 20+ years so I am getting there.
 
+New: Set auction limits will only be affected by our own auctions, Seller cycle time is now configurable, Added option for a list of player(or bot) GUIDs to not buy from
+
 ## Installation and Setup
 
 1. Download the code into your source code `modules/` folder
