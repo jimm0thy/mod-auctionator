@@ -101,7 +101,7 @@ void AuctionatorEvents::ExecuteEvents()
                             events.ScheduleEvent(currentEvent, config->neutralBidder.cycleMinutes);
                         }
                         break;
-                    case 4:
+                    case 4:                       
                         EventAllianceSeller();
                         if (config->allianceSeller.enabled) {
                             events.ScheduleEvent(currentEvent, config->sellerConfig.sellerCycleMinutes); // Let's make selling event run times configurable
@@ -168,20 +168,30 @@ void AuctionatorEvents::EventNeutralBidder()
 }
 
 void AuctionatorEvents::EventAllianceSeller()
-{
+{    
     AuctionatorSeller sellerAlliance =
         AuctionatorSeller(gAuctionator, static_cast<uint32>(AuctionHouseId::Alliance));
-
-    uint32 auctionCountAlliance = houses->AllianceAh->Getcount();
-
+   
     QueryResult result = CharacterDatabase.Query("SELECT id FROM auctionhouse where itemowner = {} and houseid = {}", config->characterGuid, 2); // only count our own auctions
-    //uint32 myAuctions = (auctionCountAlliance - result->GetRowCount());
-    logInfo("My Alliance Auctions = " + std::to_string(result->GetRowCount()));
+    uint32 myAuctionsCount;
 
-    if (result->GetRowCount() <= config->allianceSeller.maxAuctions) {
+    if (!result)
+    {
+        // We have no auctions
+        myAuctionsCount = 0;
+    }
+    else
+    {
+        // We have current auctions
+        myAuctionsCount = result->GetRowCount();
+    }
+
+    logInfo("My Alliance Auctions = " + std::to_string(myAuctionsCount));
+
+    if (myAuctionsCount <= config->allianceSeller.maxAuctions) {
         logInfo(
             "Alliance count is good, here we go: "
-            + std::to_string(result->GetRowCount())
+            + std::to_string(myAuctionsCount)
             + " of " + std::to_string(config->allianceSeller.maxAuctions)
         );
 
@@ -190,7 +200,7 @@ void AuctionatorEvents::EventAllianceSeller()
             (uint32)AuctionHouseId::Alliance
         );
     } else {
-        logInfo("Alliance count over max: " + std::to_string(result->GetRowCount()));
+        logInfo("Alliance count over max: " + std::to_string(myAuctionsCount));
     }
     
 }
@@ -198,18 +208,28 @@ void AuctionatorEvents::EventAllianceSeller()
 void AuctionatorEvents::EventHordeSeller()
 {
     AuctionatorSeller sellerHorde =
-        AuctionatorSeller(gAuctionator, static_cast<uint32>(AuctionHouseId::Horde));
-
-    uint32 auctionCountHorde = houses->HordeAh->Getcount();
+        AuctionatorSeller(gAuctionator, static_cast<uint32>(AuctionHouseId::Horde));    
 
     QueryResult result = CharacterDatabase.Query("SELECT id FROM auctionhouse where itemowner = {} and houseid = {}", config->characterGuid, 6); // only count our own auctions
-    //uint32 myAuctions = (auctionCountHorde - result->GetRowCount());
-    logInfo("My Horde Auctions = " + std::to_string(result->GetRowCount()));
+    uint32 myAuctionsCount;
 
-    if (result->GetRowCount() <= config->hordeSeller.maxAuctions) {
+    if (!result)
+    {
+        // We have no auctions
+        myAuctionsCount = 0;
+    }
+    else
+    {
+        // We have current auctions
+        myAuctionsCount = result->GetRowCount();
+    }
+
+    logInfo("My Horde Auctions = " + std::to_string(myAuctionsCount));
+
+    if (myAuctionsCount <= config->hordeSeller.maxAuctions) {
         logInfo(
             "Horde count is good, here we go: "
-            + std::to_string(result->GetRowCount())
+            + std::to_string(myAuctionsCount)
             + " of " + std::to_string(config->hordeSeller.maxAuctions)
         );
 
@@ -218,25 +238,35 @@ void AuctionatorEvents::EventHordeSeller()
             (uint32)AuctionHouseId::Horde
         );
     } else {
-        logInfo("Horde count over max: " + std::to_string(result->GetRowCount()));
+        logInfo("Horde count over max: " + std::to_string(myAuctionsCount));
     }
 }
 
 void AuctionatorEvents::EventNeutralSeller()
 {
     AuctionatorSeller sellerNeutral =
-        AuctionatorSeller(gAuctionator, static_cast<uint32>(AuctionHouseId::Neutral));
-
-    uint32 auctionCountNeutral = houses->NeutralAh->Getcount();
+        AuctionatorSeller(gAuctionator, static_cast<uint32>(AuctionHouseId::Neutral));   
 
     QueryResult result = CharacterDatabase.Query("SELECT id FROM auctionhouse where itemowner = {} and houseid = {}", config->characterGuid, 7); // only count our own auctions
-    //uint32 myAuctions = (auctionCountNeutral - result->GetRowCount());
-    logInfo("My Neutral Auctions = " + std::to_string(result->GetRowCount()));
+    uint32 myAuctionsCount;
 
-    if (result->GetRowCount() <= config->neutralSeller.maxAuctions) {
+    if (!result)
+    {
+        // We have no auctions
+        myAuctionsCount = 0;
+    }
+    else
+    {
+        // We have current auctions
+        myAuctionsCount = result->GetRowCount();
+    }
+
+    logInfo("My Neutral Auctions = " + std::to_string(myAuctionsCount));
+
+    if (myAuctionsCount <= config->neutralSeller.maxAuctions) {
         logInfo(
             "Neutral count is good, here we go: "
-            + std::to_string(result->GetRowCount())
+            + std::to_string(myAuctionsCount)
             + " of " + std::to_string(config->neutralSeller.maxAuctions)
         );
 
@@ -246,7 +276,7 @@ void AuctionatorEvents::EventNeutralSeller()
         );
 
     } else {
-        logInfo("Neutral count over max: " + std::to_string(result->GetRowCount()));
+        logInfo("Neutral count over max: " + std::to_string(myAuctionsCount));
     }
 }
 

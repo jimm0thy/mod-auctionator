@@ -107,11 +107,12 @@ void AuctionatorSeller::LetsGetToIt(uint32 maxCount, uint32 houseId)
             -- filter out items where we are already at or above max_count
             -- for uniques in this class to limit dups
             AND (ic.itemCount IS NULL OR ic.itemCount < aicconf.max_count)
-            AND VerifiedBuild != 1
+            AND VerifiedBuild != 1 AND it.class <> 12
         ORDER BY RAND()
         LIMIT {}
         ;
     )";
+    // Added condition to filter out quest items (it.class <> 12)
 
     QueryResult result = WorldDatabase.Query(
         itemQuery,
@@ -162,8 +163,11 @@ void AuctionatorSeller::LetsGetToIt(uint32 maxCount, uint32 houseId)
             price = marketPrice;
         }
 
+        // Not sure why price was being hard coded when its a config option
+        // Also why are we applying the quality multiplier here and then again below
         if (price == 0) {
-            price = 10000000; //*qualityMultiplier; -- qualityMultiplier is applied below so lets not double it
+            //price = 10000000 * qualityMultiplier;
+            price = nator->config->sellerConfig.defaultPrice;
         }
 
         // calculate our starting bid price
