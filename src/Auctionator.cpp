@@ -239,6 +239,7 @@ void Auctionator::InitializeConfig(ConfigMgr* configMgr)
 
     config->bidOnOwn = configMgr->GetOption<uint32>("Auctionator.Bidder.BidOnOwn", 0);
     config->NoBuyList = configMgr->GetOption<std::string>("Auctionator.Bidder.NoBuyList", "");
+    config->bidderDefaultPrice = configMgr->GetOption<uint32>("Auctionator.Bidder.DefaultPrice", 50);
 
     // load out multipliers for seller prices
     config->sellerMultipliers.poor

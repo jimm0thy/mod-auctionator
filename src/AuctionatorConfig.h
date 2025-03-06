@@ -67,6 +67,7 @@ class AuctionatorConfig
 
         uint32 bidOnOwn = 0;
         std::string NoBuyList;
+        uint32 bidderDefaultPrice = 50;
 };
 
 #endif

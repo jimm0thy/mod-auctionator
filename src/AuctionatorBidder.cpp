@@ -14,6 +14,7 @@ AuctionatorBidder::AuctionatorBidder(uint32 auctionHouseIdParam, ObjectGuid buye
     config = auctionatorConfig;
     bidOnOwn = config->bidOnOwn;
     NoBuyList = config->NoBuyList;
+    bidDefaultPrice = config->bidderDefaultPrice;
 }
 
 AuctionatorBidder::~AuctionatorBidder()
@@ -24,13 +25,7 @@ AuctionatorBidder::~AuctionatorBidder()
 void AuctionatorBidder::SpendSomeCash()
 {
     uint32 auctionatorPlayerGuid = buyerGuid.GetRawValue();
-
-   /* std::string query = R"(
-        SELECT
-            ah.id
-        FROM auctionhouse ah
-        WHERE itemowner <> {} AND houseid = {};
-    )";*/
+      
 
     // for testing we may want to bid on our own auctions.
     // if we do we set the ownerToSkip to 0 so we will pick
@@ -163,7 +158,7 @@ bool AuctionatorBidder::BidOnAuction(AuctionEntry* auction, ItemTemplate const* 
     }
 
     // find out what we should really consider paying for the auction
-    uint32 buyPrice = CalculateBuyPrice(auction, itemTemplate);
+    uint32 buyPrice = CalculateBuyPrice(auction, itemTemplate);    
 
     // decide if our bid is less than the max amount we want to pay to avoid overpaying
     // for an item.
@@ -212,7 +207,7 @@ bool AuctionatorBidder::BidOnAuction(AuctionEntry* auction, ItemTemplate const* 
 bool AuctionatorBidder::BuyoutAuction(AuctionEntry* auction, ItemTemplate const* itemTemplate)
 {
     // let's just go ahead and find out what the max we will pay for this item is.
-    uint32 buyPrice = CalculateBuyPrice(auction, itemTemplate);
+    uint32 buyPrice = CalculateBuyPrice(auction, itemTemplate);   
 
     if (auction->buyout > buyPrice) {
         logInfo("Skipping buyout, price ("
@@ -300,6 +295,14 @@ uint32 AuctionatorBidder::CalculateBuyPrice(AuctionEntry* auction, ItemTemplate 
 
     // figure out if we are using our itemtemplate->BuyPrice or market price.
     uint32 price = item->BuyPrice;
+
+    // some items have a 0 BuyPrice and we increase price for listing auctions
+    //  so lets do that for buying them too but at a much much lower value
+    if (price == 0)
+    {
+        price = bidDefaultPrice; // price in copper
+    }
+
     if (marketPrice > 0) {
         logInfo("Using Market over Template for bid eval [" + item->Name1 + "] " +
             std::to_string(marketPrice) + " <--> " + std::to_string(price) +

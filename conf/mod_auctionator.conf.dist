@@ -62,10 +62,16 @@ Auctionator.NeutralBidder.MaxPerCycle = 2
 Auctionator.Seller.QueryLimit = 1000
 
 ########################################
-# Default price for items that have a BuyPrice of 0.
+# Default price for selling items that have a BuyPrice of 0.
 # Default is 1000 gold.
 ########################################
 Auctionator.Seller.DefaultPrice = 10000000
+
+########################################
+# Default price for buying items that have a BuyPrice of 0.
+# Default is 50 copper
+########################################
+Auctionator.Bidder.DefaultPrice = 50
 
 ########################################
 # Number of auctions added to the AH per run. This needs to
