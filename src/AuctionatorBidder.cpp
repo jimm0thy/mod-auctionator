@@ -300,6 +300,7 @@ uint32 AuctionatorBidder::CalculateBuyPrice(AuctionEntry* auction, ItemTemplate 
     //  so lets do that for buying them too but at a much much lower value
     if (price == 0)
     {
+        logInfo("Using bidDefaultPrice from config file for bid eval [" + item->Name1 + "]");
         price = bidDefaultPrice; // price in copper
     }
 

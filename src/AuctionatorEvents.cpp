@@ -188,7 +188,7 @@ void AuctionatorEvents::EventAllianceSeller()
 
     logInfo("My Alliance Auctions = " + std::to_string(myAuctionsCount));
 
-    if (myAuctionsCount <= config->allianceSeller.maxAuctions) {
+    if (myAuctionsCount < config->allianceSeller.maxAuctions) {
         logInfo(
             "Alliance count is good, here we go: "
             + std::to_string(myAuctionsCount)
@@ -226,7 +226,7 @@ void AuctionatorEvents::EventHordeSeller()
 
     logInfo("My Horde Auctions = " + std::to_string(myAuctionsCount));
 
-    if (myAuctionsCount <= config->hordeSeller.maxAuctions) {
+    if (myAuctionsCount < config->hordeSeller.maxAuctions) {
         logInfo(
             "Horde count is good, here we go: "
             + std::to_string(myAuctionsCount)
@@ -263,7 +263,7 @@ void AuctionatorEvents::EventNeutralSeller()
 
     logInfo("My Neutral Auctions = " + std::to_string(myAuctionsCount));
 
-    if (myAuctionsCount <= config->neutralSeller.maxAuctions) {
+    if (myAuctionsCount < config->neutralSeller.maxAuctions) {
         logInfo(
             "Neutral count is good, here we go: "
             + std::to_string(myAuctionsCount)
